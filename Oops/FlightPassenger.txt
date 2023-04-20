@@ -1,0 +1,74 @@
+
+/* One possible solution*/
+
+Consider a Flight which goes to intermediate destination
+(upto 2 stops in between the route) before reaching final destination.
+ Each flight can carry fixed number of passengers and particular weights of goods. 
+We can get display list of all the passengers or passengers to particular destination.
+ Write and CPP program to create a flight and add passengers to it. Finally print the details of passengers. 
+
+///////////////////////////////////
+class Passenger{
+public:
+    string name;
+    long long mobile;
+    int age;
+    string source;
+    string destination;
+    Passenger(string n, long long m, int a, string s, string d):name(n),mobile(m),
+    age(a),source(s),destination(d){
+    }
+    void printPassenger(){
+    cout<<name<<":"<<mobile<<":"<<age<<":"<<source<<":"<<destination<<endl;
+    }
+};
+class Flight{
+public:
+    string source;
+    string destination;
+    string intermediateDestination[2];
+    double* goods;
+    Passenger* passengers;
+    Flight():source(""),destination(""){
+    intermediateDestination[0]="d1";
+    intermediateDestination[1]="d2";
+    }
+    Flight(string s, string d):source(s),destination(d){
+    intermediateDestination[0]="d1";
+    intermediateDestination[1]="d2";
+    }
+    void printFlightDetails(){
+    cout<<source<<":"<<destination<<":"<<intermediateDestination[0]<<":"<<intermediateDestination[1]<<endl;
+    for(int i=0;i<2;i++){
+        passengers[i].printPassenger();
+    }
+    for(int i=0;i<5;i++){
+        cout<<goods[i]<<endl;
+    }
+    }
+    void printPassengers(string destination){
+    for(int i=0;i<2;i++){
+        if(passengers[i].destination=="d1")
+            passengers[i].printPassenger();
+    }
+    }
+
+};
+int main(){
+
+Passenger p1("a",123456,22,"s","d1"),p2("b",123456,21,"s","d");
+Passenger flightPassengers[]={p1,p2};
+//flightPassengers[0].printPassenger();
+
+double flightGoods[]={1,2,3,4,5};
+
+Flight f1("s","d");
+
+f1.passengers=flightPassengers;
+f1.goods=flightGoods;
+f1.printFlightDetails(); // prints all passengers of a flight
+cout<<"Printing passengers of a given destination"<<endl;
+f1.printPassengers("d1");
+
+return 0;
+}

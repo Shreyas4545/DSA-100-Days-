@@ -1,0 +1,288 @@
+//composition
+class BroadBand{
+public:
+    string custName;
+    int custId;
+    double planAmount;
+    BroadBand():custName(""),custId(0),planAmount(0){
+    }
+    BroadBand(string cn,int id, double pa):custName(cn),custId(id),planAmount(pa){
+
+    }
+    void printBroadBand(){
+    cout<<custName<<":"<<custId<<":"<<planAmount<<endl;
+    }
+};
+class DTH{
+public:
+    long long mobileNo;
+    //Assume channel list is fixed
+    string channelList[2];
+    double balance;
+    DTH(long long m,double bal):mobileNo(m),balance(bal){
+    cout<<"Enter channels"<<endl;
+    for(int i=0;i<2;i++){
+        cin>>channelList[i];
+    }
+    }
+    DTH():mobileNo(0),balance(0){
+   // cout<<"The channel list is initialized in parameterized constructor"<<endl;
+    }
+    void printDTH(){
+     cout<<mobileNo<<":"<<balance<<endl;
+     for(int i=0;i<2;i++){
+            cout<<channelList[i]<<"\t";
+    }
+    cout<<endl;
+    }
+};
+class NetworkServiceProvider{
+public:
+    static int bbcount;
+    static int dthcount;
+    BroadBand broadBandArray[5];
+    DTH dthArray[5];
+
+    NetworkServiceProvider(){
+     BroadBand bb1("aaa",1,500),bb2("bbb",2,600),bb3("ccc",3,500);
+     broadBandArray[0]=bb1; broadBandArray[1]=bb2;broadBandArray[2]=bb3;
+
+    DTH dth1(123456,500),dth2(12345678,900),dth3(1234567,600),dth4,dth5;
+    dthArray[0]=dth1; dthArray[1]=dth2; dthArray[2]=dth3;
+
+
+    }
+
+    void registerNewConnection(BroadBand bb){
+        //id,name,amt
+        broadBandArray[++bbcount]=bb;
+        cout<<"New connection registered"<<endl;
+    }
+    void registerNewConnection(DTH dth){
+    dthArray[++dthcount]=dth;
+    cout<<"New connection registered"<<endl;
+    }
+    void printNSP(){
+
+    for(int j=0;j<5;j++){
+       dthArray[j].printDTH();
+    }
+    for(int i=0;i<10;i++){
+        if(broadBandArray[i].custName!="")
+            broadBandArray[i].printBroadBand();
+
+    }
+
+    }
+};
+int NetworkServiceProvider::bbcount=2; //initially objects 3 exists,start adding from 4th
+int NetworkServiceProvider::dthcount=2;//initially objects 3 exists,start adding from 4th
+
+int main(){
+
+long long mn; string cList[2]; double bal;
+
+NetworkServiceProvider nsp;
+int id;string n;double amt;
+        cout<<"Enter Broadband details"<<endl;
+        cin>>n>>id>>amt;
+        BroadBand b(n,id,amt);
+nsp.registerNewConnection(b);
+
+cout<<"Enter new DTH details"<<endl;
+cout<<"Enter channels"<<endl;
+for(int i=0;i<2;i++){
+    cin>>cList[i];
+}
+cin>>mn>>bal;
+DTH dth(mn,bal);
+dth.channelList[0]=cList[0];
+dth.channelList[1]=cList[1];
+nsp.registerNewConnection(dth);
+
+
+nsp.printNSP();
+
+return 0;
+}
+
+//Aggregation
+
+class BroadBand{
+public:
+    string custName;
+    int custId;
+    double planAmount;
+    BroadBand():custName(""),custId(0),planAmount(0){
+    }
+    BroadBand(string cn,int id, double pa):custName(cn),custId(id),planAmount(pa){
+
+    }
+    void printBroadBand(){
+    cout<<custName<<":"<<custId<<":"<<planAmount<<endl;
+    }
+};
+class DTH{
+public:
+    long long mobileNo;
+    //Assume channel list is fixed
+    string channelList[2];
+    double balance;
+    DTH(long long m,double bal):mobileNo(m),balance(bal){
+    cout<<"Enter channels"<<endl;
+    for(int i=0;i<2;i++){
+        cin>>channelList[i];
+    }
+    }
+    DTH():mobileNo(0),balance(0){
+    cout<<"The channel list is initialized in parameterized constructor"<<endl;
+    }
+    void printDTH(){
+     cout<<mobileNo<<":"<<balance<<endl;
+     for(int i=0;i<2;i++){
+            cout<<channelList[i]<<"\t";
+    }
+    cout<<endl;
+    }
+};
+class NetworkServiceProvider{
+public:
+    static int bbcount;
+    static int dthcount;
+    BroadBand* broadBandArray;
+    DTH* dthArray;
+
+    NetworkServiceProvider(){}
+
+    void registerNewConnection(BroadBand b){
+    broadBandArray[++bbcount]=b;
+    }
+    void registerNewConnection(DTH dth){
+    dthArray[++dthcount]=dth;
+    }
+    void printNSP(){
+    for(int i=0;i<10;i++){
+            if(broadBandArray[i].custName!="")
+        broadBandArray[i].printBroadBand();
+
+    }
+
+    for(int j=0;j<5;j++){
+    dthArray[j].printDTH();
+    }
+
+    }
+};
+int NetworkServiceProvider::bbcount=2; //initially objects 3 exists,start adding from 4th
+int NetworkServiceProvider::dthcount=2;//initially objects 3 exists,start adding from 4th
+int main(){
+BroadBand bb1("aaa",1,500),bb2("bbb",2,600),bb3("ccc",3,500),bb4,bb5,bb6,bb7,bb8,bb9,bb10;
+BroadBand bArray[]={bb1,bb2,bb3,bb4,bb5,bb6,bb7,bb8,bb9,bb10};
+
+NetworkServiceProvider nsp;
+nsp.broadBandArray=bArray;
+BroadBand bb("ddd",3,500);
+nsp.registerNewConnection(bb);//updates the existing object
+
+BroadBand bb0("eee",4,500);
+nsp.registerNewConnection(bb0);//updates the existing object
+
+DTH dth1(123456,500),dth2(12345678,900),dth3(1234567,600),dth4,dth5;
+DTH dthArray1[]={dth1,dth2,dth3,dth4,dth5};
+nsp.dthArray=dthArray1;
+
+DTH dth(222222,750);
+nsp.registerNewConnection(dth);
+nsp.printNSP();
+return 0;
+}
+
+//Inheritance: CourierItem,PaperItem,MaterialItem.
+class CourierItem{
+public:
+    int id;
+    string fromAddress;
+    string toAddress;
+    double weight;
+    double price;
+    CourierItem():id(0),fromAddress(""), toAddress(""),weight(0),price(0){
+
+    }
+    CourierItem(int n, string fa, string ta,double w, double p):id(n),fromAddress(fa),toAddress(ta),weight(w),price(p){
+
+    }
+    double getPrice(){
+    return price;
+    }
+    void printCourierItem(){
+    cout<<id<<":"<<fromAddress<<":"<<toAddress<<":"<<weight<<":"<<price<<endl;
+    }
+
+};
+class PaperItem:public CourierItem{
+public:
+    string typeOfDocument;
+    PaperItem():CourierItem(),typeOfDocument(""){
+    }
+    PaperItem(int n, string fa, string ta,double w, double p,string td):CourierItem(n,fa,ta,w,p),typeOfDocument(td){
+
+    }
+    double getPrice(){
+        if(typeOfDocument=="letter" && weight<200)
+        {
+            price=100;
+        }
+        else
+        {
+        price=200;
+        }
+        if(typeOfDocument=="book" && weight<200)
+        {
+            price=200;
+        }
+        else
+        {
+        price=300;
+        }
+        return price;
+    }
+    void printCourierItem(){
+    CourierItem::printCourierItem();
+    cout<<typeOfDocument<<endl;
+    }
+
+};
+class MaterialItem: public CourierItem{
+public:
+    double boxHeight;
+    double boxWidth;
+    MaterialItem():CourierItem(),boxHeight(0),boxWidth(0){
+    }
+    MaterialItem(int n, string fa, string ta,double w, double p,double bh, double bw):
+        CourierItem(n,fa,ta,w,p),boxHeight(bh),boxWidth(bw){
+
+        }
+       void printCourierItem(){
+    CourierItem::printCourierItem();
+    cout<<boxHeight<<":"<<boxWidth<<endl;
+    }
+    double getPrice(){
+    double vol=boxHeight*boxWidth;
+    if(vol>100 && weight>100){
+
+        price=100;
+    }
+    else{
+        price=300;
+    }
+    return price;
+    }
+};
+int main(){
+
+
+return 0;
+}
+
+
+

@@ -1,0 +1,117 @@
+Multiple Inheritance
+#include<bits/stdc++.h>
+using namespace std;
+class A{
+public:
+    void print()
+    {
+        cout<<"Hello"<<endl;
+    }
+};
+class B{
+public:
+    void printB()
+    {
+        cout<<"World"<<endl;
+    }
+};
+class C:public A,public B{
+public:
+};
+int main()
+{
+    C o;
+    o.print();
+    o.printB();
+    return 0;
+}
+
+
+Heirarcial Inheritance
+
+#include<iostream>
+using namespace std;
+class shape{
+public:
+    int l;
+    int b;
+    shape():l(0),b(0){};
+    int getdata(int x,int y)
+    {
+        l=x;
+        b=y;
+    }
+};
+class rectangle:public shape{
+public:
+    int getarea()
+    {
+        return l*b;
+    }
+};
+class triangle:public shape{
+public:
+    int getarea()
+    {
+        return 0.5*l*b;
+    }
+};
+int main()
+{
+    rectangle r;
+    triangle t;
+    int k,g;
+    cin>>k>>g;
+    r.getdata(k,g);
+    cout<<r.getarea()<<endl;
+    t.getdata(k,g);
+    cout<<t.getarea()<<endl;
+    return 0;
+}
+
+Hybrid Inheritance
+
+#include<iostream>
+using namespace std;
+class A{
+protected:
+    int a;
+    int get()
+    {
+      cin>>a;
+    }
+};
+
+class B:public A{
+protected:
+    int b;
+    int getb()
+    {
+        cin>>b;
+    }
+};
+class C{
+protected:
+    int c;
+    int getc()
+    {
+       cin>>c;
+    }
+};
+class D:public B,public C{
+public:
+    void display()
+    {
+
+    get();
+    getb();
+    getc();
+        cout<<a<<" "<<b<<" "<<c<<" "<<endl;
+    }
+};
+int main()
+{
+    D d;
+    d.display();
+    return 0;
+}
